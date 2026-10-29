@@ -49,7 +49,11 @@ FINAL_STAGES = {"won", "lost"}
 class LeadStage(StrEnum):
     """Stage of a lead in the sales pipeline."""
 
-    # TODO CRM-01: declare the members here
+    NEW ="new"
+    QUALIFIED = "qualified"
+    PROPOSITION = "proposition"
+    WON = "won"
+    LOST = "lost"
 
     @property
     def default_probability(self) -> int:
