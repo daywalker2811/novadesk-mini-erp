@@ -1,0 +1,13 @@
+sku,name,category,unit_cost,reorder_point
+FURN-001,Office Chair,Seating,89.50,10
+FURN-002,Ergonomic Chair,Seating,249.00,5
+FURN-003,Conference Chair,Seating,65.00,12
+FURN-010,Desk 160x80,Desks,310.00,4
+FURN-011,Standing Desk,Desks,540.00,3
+FURN-012,Corner Desk,Desks,420.00,2
+FURN-020,Large Cabinet,Storage,199.90,4
+FURN-021,Drawer Unit,Storage,129.00,6
+FURN-022,Bookshelf,Storage,149.00,3
+ACC-100,Monitor Arm,Accessories,59.90,15
+ACC-101,Desk Lamp,Accessories,34.50,20
+ACC-102,Cable Tray,Accessories,19.90,25

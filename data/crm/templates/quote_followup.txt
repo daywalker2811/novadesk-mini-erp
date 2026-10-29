@@ -1,0 +1,11 @@
+Dear {{ lead.contact }},
+
+Thank you for your interest in NovaDesk.
+{% if lead.stage == "proposition" %}
+Please find attached our quote for {{ lead.company }}.
+{% else %}
+Our team will contact you soon to understand your needs.
+{% endif %}
+
+Best regards,
+{{ user.name }}

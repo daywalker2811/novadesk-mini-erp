@@ -1,0 +1,8 @@
+Hello {{ lead.contact }},
+
+Here is your welcome pack:
+{% for item in pack %}
+- {{ item.name }}{% if item.new %} (new!){% endif %}
+{% endfor %}
+
+See you soon!

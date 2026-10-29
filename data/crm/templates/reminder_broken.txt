@@ -1,0 +1,8 @@
+Hello {{ lead.contact },
+
+{% if lead.expected_revenue > 10000 %}
+A senior advisor will call you this week.
+{% for slot in slots %}
+- {{ slot }}
+{% endif %}
+{% endfor %}

@@ -1,0 +1,14 @@
+[
+  {"id": "T-01", "name": "Site survey", "stage": "done", "assignee": "alice", "planned_hours": 6, "deadline": "2026-03-03", "depends_on": [], "tags": ["onsite"]},
+  {"id": "T-02", "name": "Floor plan", "stage": "done", "assignee": "bob", "planned_hours": 12, "deadline": "2026-03-06", "depends_on": ["T-01"], "tags": ["design"]},
+  {"id": "T-03", "name": "Furniture selection", "stage": "review", "assignee": "carla", "planned_hours": 8, "deadline": "2026-03-10", "depends_on": ["T-02"], "tags": ["design", "purchase"]},
+  {"id": "T-04", "name": "Quote validation", "stage": "in_progress", "assignee": "alice", "planned_hours": 3, "deadline": "2026-03-12", "depends_on": ["T-03"], "tags": ["sales"]},
+  {"id": "T-05", "name": "Purchase order", "stage": "new", "assignee": "dan", "planned_hours": 4, "deadline": "2026-03-16", "depends_on": ["T-04"], "tags": ["purchase"]},
+  {"id": "T-06", "name": "Electrical works", "stage": "in_progress", "assignee": "bob", "planned_hours": 16, "deadline": "2026-03-13", "depends_on": ["T-02"], "tags": ["onsite", "subcontractor"]},
+  {"id": "T-07", "name": "Delivery planning", "stage": "new", "assignee": "carla", "planned_hours": 5, "deadline": "2026-03-20", "depends_on": ["T-05"], "tags": ["logistics"]},
+  {"id": "T-08", "name": "Installation", "stage": "new", "assignee": null, "planned_hours": 24, "deadline": "2026-03-27", "depends_on": ["T-06", "T-07"], "tags": ["onsite"]},
+  {"id": "T-09", "name": "Cable management", "stage": "new", "assignee": "bob", "planned_hours": 6, "deadline": "2026-03-27", "depends_on": ["T-08"], "tags": ["onsite"]},
+  {"id": "T-10", "name": "Client walkthrough", "stage": "new", "assignee": "alice", "planned_hours": 2, "deadline": "2026-03-31", "depends_on": ["T-08", "T-09"], "tags": ["sales", "onsite"]},
+  {"id": "T-11", "name": "Old furniture removal", "stage": "cancelled", "assignee": "dan", "planned_hours": 8, "deadline": "2026-03-18", "depends_on": [], "tags": ["logistics"]},
+  {"id": "T-12", "name": "Invoice", "stage": "new", "assignee": null, "planned_hours": 1, "deadline": "2026-04-03", "depends_on": ["T-10"], "tags": ["accounting"]}
+]

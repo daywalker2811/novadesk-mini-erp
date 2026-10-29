@@ -1,0 +1,15 @@
+id,contact,company,email,stage,expected_revenue,probability,salesperson,created
+1,Jean Dupont,Lumen Consulting,jean.dupont@lumen-consulting.be,won,18500,100,sophie,2026-01-08
+2,Marie Lambert,Brightside Dental,m.lambert@brightside.be,lost,7200,0,karim,2026-01-15
+3,Tom Peeters,Atelier Peeters,tom@atelierpeeters,qualified,4300,30,sophie,2026-01-22
+4,Sarah Cohen,Northwind Logistics,sarah.cohen@northwind.eu,proposition,26000,60,karim,2026-02-03
+5,Luc Martin,Lumen Consulting SA,luc.martin@lumen-consulting.be,new,9800,10,lea,2026-02-10
+6,Anna Novak,Greenfield School,anna.novak@greenfield.edu,qualified,15400,30,sophie,2026-02-11
+7,Pierre Durand,Brightside Dental,,new,3100,10,karim,2026-02-19
+8,Emma Janssens,Studio Kaleido,emma@studio-kaleido.be,proposition,12750,60,lea,2026-02-24
+9,Yusuf Demir,Northwind Logistics,yusuf.demir@northwind.eu,won,8400,100,karim,2026-03-02
+10,Claire Dubois,City of Wavre,claire.dubois@@wavre.be,new,41000,10,sophie,2026-03-05
+11,Noah Simon,Studio Kaleido B.V.,noah@studio-kaleido.be,qualified,5600,30,lea,2026-03-09
+12,Julie Hermans,Helio Energy,julie.hermans@helio-energy.com,proposition,33000,60,sophie,2026-03-12
+13,Marc Leroy,Helio Energy Ltd.,marc.leroy@helio-energy.com,new,6900,10,karim,2026-03-16
+14,Ines Garcia,Brightside Dental,ines.garcia@brightside.be,qualified,7800,30,lea,2026-03-18
