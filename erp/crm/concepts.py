@@ -96,7 +96,6 @@ class LeadStage(StrEnum):
 # ⏱ ~20 min
 def split_contact_name(full_name: str) -> tuple[str, str]: 
     full_name = full_name.split()
-    print(full_name)
     if not full_name:
         raise ValueError("Le nom ne peut pas être vide")
     if len(full_name) == 1:
@@ -143,10 +142,10 @@ def row_to_dict(headers: list[str], row: list[str]) -> dict[str, str]:
 def weighted_pipeline(leads: list[Lead]) -> list[tuple[str, float]]:
     filtered_stage = filter(lambda lead: lead.stage not in FINAL_STAGES, leads)
 
-    def expected_revenur(lead):
+    def expected_revenue(lead):
         expected_revenue = round((lead.expected_revenue * lead.probability)/100, 2 )
         return (lead.company, expected_revenue)
-    company_revenues = map(expected_revenur, filtered_stage)
+    company_revenues = map(expected_revenue, filtered_stage)
 
     return sorted(company_revenues, key=lambda item: (-item[1], item[0]))
 
@@ -238,8 +237,10 @@ def assign_round_robin(lead_ids: list[int], salespeople: list[str]) -> dict[int,
 
 
 def leads_per_month(leads: list[Lead]) -> list[tuple[str, int]]:
-    todo("CRM-06")
-
+    return {
+        [(key, len(list(group))) 
+        for key, group in itertools.groupby(leads, key=lambda lead: lead.created.strftime("%Y-%m"))]
+    }
 
 # ════════════════════════════════════════════════════════════════════════════
 # CRM-07 · Top opportunities & temperature              Concept: heapq & bisect
