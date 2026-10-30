@@ -50,15 +50,26 @@ CLOSED_STAGES = {"done", "cancelled"}
 # ⏱ ~25 min
 class Stage(StrEnum):
     """Kanban stage of a task."""
-
-    # TODO PRJ-01: declare the members here
+    NEW = "new"
+    IN_PROGRESS = "in_progress"
+    REVIEW = "review"
+    DONE = "done"
+    CANCELLED = "cancelled"
 
     @property
     def is_closed(self) -> bool:
-        todo("PRJ-01")
+        return self == Stage.DONE or self == Stage.CANCELLED
 
     def next_stage(self) -> Stage:
-        todo("PRJ-01")
+        match self:
+            case(Stage.NEW): 
+                return self.IN_PROGRESS
+            case(Stage.IN_PROGRESS): 
+                return self.REVIEW
+            case(Stage.REVIEW): 
+                return self.DONE
+            case _: 
+                raise ValueError("Stage is already closed")
 
 
 # ════════════════════════════════════════════════════════════════════════════
