@@ -92,7 +92,7 @@ def index_by_sku(products: list[Product]) -> dict[str, Product]:
 
 
 def categories(products: list[Product]) -> set[str]:
-    todo("INV-02")
+    return {i.category for i in products}
 
 
 def cheapest_first(products: list[Product]) -> tuple[Product, list[Product]]:
