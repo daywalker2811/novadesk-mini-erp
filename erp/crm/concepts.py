@@ -96,9 +96,11 @@ class LeadStage(StrEnum):
 # ⏱ ~20 min
 def split_contact_name(full_name: str) -> tuple[str, str]: 
     full_name = full_name.split()
-
+    print(full_name)
     if not full_name:
-            return ('', '')
+        raise ValueError("Le nom ne peut pas être vide")
+    if len(full_name) == 1:
+        full_name.append("")
 
     first_name, *_, last_name = full_name
     
@@ -130,12 +132,23 @@ def email_domains(leads: list[Lead]) -> set[str]:
 #             https://docs.python.org/3/howto/sorting.html#key-functions
 # ⏱ ~20 min
 def row_to_dict(headers: list[str], row: list[str]) -> dict[str, str]:
-    todo("CRM-03")
+    def clean_spaces(text):
+        return text.strip()
+    clean_headers = map(clean_spaces, headers)
+    clean_row = map(clean_spaces, row)
 
+    return dict(zip(clean_headers, clean_row, strict = True))
+        
 
 def weighted_pipeline(leads: list[Lead]) -> list[tuple[str, float]]:
-    todo("CRM-03")
+    filtered_stage = filter(lambda lead: lead.stage not in FINAL_STAGES, leads)
 
+    def expected_revenur(lead):
+        expected_revenue = round((lead.expected_revenue * lead.probability)/100, 2 )
+        return (lead.company, expected_revenue)
+    company_revenues = map(expected_revenur, filtered_stage)
+
+    return sorted(company_revenues, key=lambda item: (-item[1], item[0]))
 
 # ════════════════════════════════════════════════════════════════════════════
 # CRM-04 · Lead streams                                    Concept: generators
