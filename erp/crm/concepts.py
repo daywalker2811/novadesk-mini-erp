@@ -176,7 +176,8 @@ def valid_leads(leads: Iterable[Lead]):
 
 
 def all_leads(*sources: Iterable[Lead]):
-    todo("CRM-04")
+    for source in sources:
+        yield from source
 
 
 # ════════════════════════════════════════════════════════════════════════════
