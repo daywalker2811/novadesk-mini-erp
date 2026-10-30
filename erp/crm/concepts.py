@@ -260,16 +260,27 @@ def leads_per_month(leads: list[Lead]) -> list[tuple[str, int]]:
 # 📚 Discover: https://docs.python.org/3/library/heapq.html  (nlargest)
 #             https://docs.python.org/3/library/bisect.html (read the "grade" example)
 # ⏱ ~20 min
+import heapq, bisect
 SCORE_BREAKPOINTS = [40, 70]
 TEMPERATURES = ["cold", "warm", "hot"]
 
 
 def top_opportunities(leads: list[Lead], k: int) -> list[int]:
-    todo("CRM-07")
+    heap_data = [
+        (lead.expected_revenue, lead.id) 
+        for lead in leads 
+        if lead.stage not in FINAL_STAGES
+    ]
+    heapq.heapify(heap_data)
+    top_leads = heapq.nlargest(k, heap_data)
+    return [lead_id for revenue, lead_id in top_leads]
 
 
 def temperature(score: int) -> str:
-    todo("CRM-07")
+    i = bisect.bisect(SCORE_BREAKPOINTS, score)
+    return TEMPERATURES[i]
+
+
 
 
 # ════════════════════════════════════════════════════════════════════════════
