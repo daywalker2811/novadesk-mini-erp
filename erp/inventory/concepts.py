@@ -16,12 +16,14 @@ the tests use these names.
 from __future__ import annotations
 
 from datetime import date
+from symtable import Class
 
 from erp.common.todo import todo
 from erp.inventory.data import load_products
 from erp.inventory.models import Product, StockMove
 
 from enum import StrEnum
+
 
 # Add the imports you need here (collections, itertools, functools, heapq, bisect...).
 
@@ -58,7 +60,11 @@ class MoveType(StrEnum):
 
     @property
     def sign(self) -> int:
-        todo("INV-01")
+        match self:
+            case MoveType.RECEIPT | MoveType.ADJUSTMENT:
+                return 1
+            case MoveType.DELIVERY:
+                return -1
 
 
 def signed_quantity(move: StockMove) -> int:
