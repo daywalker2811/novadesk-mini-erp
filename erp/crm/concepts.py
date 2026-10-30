@@ -194,13 +194,23 @@ def all_leads(*sources: Iterable[Lead]):
 #
 # 📚 Discover: https://docs.python.org/3/library/collections.html  (Counter, defaultdict)
 # ⏱ ~20 min
+from collections import Counter, defaultdict
+
+
 def leads_per_salesperson(leads: list[Lead]) -> list[tuple[str, int]]:
-    todo("CRM-05")
+    sales_list = [lead.salesperson for lead in leads]
+    counts = Counter(sales_list)
+
+    return counts.most_common
 
 
 def companies_with_multiple_leads(leads: list[Lead]) -> dict[str, list[int]]:
-    todo("CRM-05")
+    grouped = defaultdict(list)
+    
+    for lead in leads:
+        grouped[lead.company].append(lead.id)
 
+    return {company: ids for company, ids in grouped.items() if len(ids) >= 2}
 
 # ════════════════════════════════════════════════════════════════════════════
 # CRM-06 · Round robin & monthly leads                       Concept: itertools
