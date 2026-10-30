@@ -49,15 +49,32 @@ FINAL_STAGES = {"won", "lost"}
 class LeadStage(StrEnum):
     """Stage of a lead in the sales pipeline."""
 
-    # TODO CRM-01: declare the members here
+    NEW ="new"
+    QUALIFIED = "qualified"
+    PROPOSITION = "proposition"
+    WON = "won"
+    LOST = "lost"
 
     @property
     def default_probability(self) -> int:
-        todo("CRM-01")
+        match self:
+            case LeadStage.NEW:
+                return 10
+            case LeadStage.QUALIFIED:
+                return 30
+            case LeadStage.PROPOSITION:
+                return 60
+            case LeadStage.WON:
+                return 100
+            case LeadStage.LOST:
+                return 0
 
     @property
     def is_open(self) -> bool:
-        todo("CRM-01")
+        if self.default_probability == 100 or self.default_probability == 0:
+            return False
+        else:
+            return True
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -77,13 +94,24 @@ class LeadStage(StrEnum):
 #             https://docs.python.org/3/tutorial/datastructures.html#sets  (set comprehensions)
 #             https://docs.python.org/3/library/stdtypes.html#str.partition
 # ⏱ ~20 min
-def split_contact_name(full_name: str) -> tuple[str, str]:
-    todo("CRM-02")
+def split_contact_name(full_name: str) -> tuple[str, str]: 
+    full_name = full_name.split()
+    if not full_name:
+        raise ValueError("Le nom ne peut pas être vide")
+    if len(full_name) == 1:
+        full_name.append("")
+
+    first_name, *_, last_name = full_name
+    
+    return tuple([first_name, last_name])
 
 
 def email_domains(leads: list[Lead]) -> set[str]:
-    todo("CRM-02")
-
+    return {
+        lead.email.split("@")[1].lower() 
+        for lead in leads 
+        if lead.email and lead.email.count("@") == 1
+    }
 
 # ════════════════════════════════════════════════════════════════════════════
 # CRM-03 · CSV import & weighted pipeline      Concept: map / filter / zip / key
@@ -103,12 +131,23 @@ def email_domains(leads: list[Lead]) -> set[str]:
 #             https://docs.python.org/3/howto/sorting.html#key-functions
 # ⏱ ~20 min
 def row_to_dict(headers: list[str], row: list[str]) -> dict[str, str]:
-    todo("CRM-03")
+    def clean_spaces(text):
+        return text.strip()
+    clean_headers = map(clean_spaces, headers)
+    clean_row = map(clean_spaces, row)
 
+    return dict(zip(clean_headers, clean_row, strict = True))
+        
 
 def weighted_pipeline(leads: list[Lead]) -> list[tuple[str, float]]:
-    todo("CRM-03")
+    filtered_stage = filter(lambda lead: lead.stage not in FINAL_STAGES, leads)
 
+    def expected_revenue(lead):
+        expected_revenue = round((lead.expected_revenue * lead.probability)/100, 2 )
+        return (lead.company, expected_revenue)
+    company_revenues = map(expected_revenue, filtered_stage)
+
+    return sorted(company_revenues, key=lambda item: (-item[1], item[0]))
 
 # ════════════════════════════════════════════════════════════════════════════
 # CRM-04 · Lead streams                                    Concept: generators
@@ -128,11 +167,16 @@ def weighted_pipeline(leads: list[Lead]) -> list[tuple[str, float]]:
 #             https://docs.python.org/3/whatsnew/3.3.html#pep-380  (yield from)
 # ⏱ ~20 min
 def valid_leads(leads: Iterable[Lead]):
-    todo("CRM-04")
+    for lead in leads:
+        if lead.email and lead.email.count("@") == 1:
+            local_part, domain = lead.email.split("@")
+            if local_part and "." in domain:
+                yield lead 
 
 
 def all_leads(*sources: Iterable[Lead]):
-    todo("CRM-04")
+    for source in sources:
+        yield from source
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -149,13 +193,23 @@ def all_leads(*sources: Iterable[Lead]):
 #
 # 📚 Discover: https://docs.python.org/3/library/collections.html  (Counter, defaultdict)
 # ⏱ ~20 min
+from collections import Counter, defaultdict
+
+
 def leads_per_salesperson(leads: list[Lead]) -> list[tuple[str, int]]:
-    todo("CRM-05")
+    sales_list = [lead.salesperson for lead in leads]
+    counts = Counter(sales_list)
+
+    return counts.most_common
 
 
 def companies_with_multiple_leads(leads: list[Lead]) -> dict[str, list[int]]:
-    todo("CRM-05")
+    grouped = defaultdict(list)
+    
+    for lead in leads:
+        grouped[lead.company].append(lead.id)
 
+    return {company: ids for company, ids in grouped.items() if len(ids) >= 2}
 
 # ════════════════════════════════════════════════════════════════════════════
 # CRM-06 · Round robin & monthly leads                       Concept: itertools
@@ -172,13 +226,21 @@ def companies_with_multiple_leads(leads: list[Lead]) -> dict[str, list[int]]:
 #
 # 📚 Discover: https://docs.python.org/3/library/itertools.html  (cycle, groupby)
 # ⏱ ~25 min
+import itertools
+
+
 def assign_round_robin(lead_ids: list[int], salespeople: list[str]) -> dict[int, str]:
-    todo("CRM-06")
+    if not salespeople:
+        raise ValueError
+    
+    return dict(zip(lead_ids, itertools.cycle(salespeople)))
 
 
 def leads_per_month(leads: list[Lead]) -> list[tuple[str, int]]:
-    todo("CRM-06")
-
+    return {
+        [(key, len(list(group))) 
+        for key, group in itertools.groupby(leads, key=lambda lead: lead.created.strftime("%Y-%m"))]
+    }
 
 # ════════════════════════════════════════════════════════════════════════════
 # CRM-07 · Top opportunities & temperature              Concept: heapq & bisect
