@@ -96,7 +96,9 @@ def categories(products: list[Product]) -> set[str]:
 
 
 def cheapest_first(products: list[Product]) -> tuple[Product, list[Product]]:
-    todo("INV-02")
+    products.sort(key=lambda x:x.unit_cost)
+    cheapest, *rest = products
+    return cheapest,rest
 
 
 # ════════════════════════════════════════════════════════════════════════════
