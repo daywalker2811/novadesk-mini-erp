@@ -94,8 +94,15 @@ class LeadStage(StrEnum):
 #             https://docs.python.org/3/tutorial/datastructures.html#sets  (set comprehensions)
 #             https://docs.python.org/3/library/stdtypes.html#str.partition
 # ⏱ ~20 min
-def split_contact_name(full_name: str) -> tuple[str, str]:
-    todo("CRM-02")
+def split_contact_name(full_name: str) -> tuple[str, str]: 
+    full_name = full_name.split()
+
+    if not full_name:
+            return ('', '')
+
+    first_name, *_, last_name = full_name
+    
+    return tuple([first_name, last_name])
 
 
 def email_domains(leads: list[Lead]) -> set[str]:
