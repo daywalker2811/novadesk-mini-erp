@@ -106,8 +106,11 @@ def split_contact_name(full_name: str) -> tuple[str, str]:
 
 
 def email_domains(leads: list[Lead]) -> set[str]:
-    todo("CRM-02")
-
+    return {
+        lead.email.split("@")[1].lower() 
+        for lead in leads 
+        if lead.email and lead.email.count("@") == 1
+    }
 
 # ════════════════════════════════════════════════════════════════════════════
 # CRM-03 · CSV import & weighted pipeline      Concept: map / filter / zip / key
