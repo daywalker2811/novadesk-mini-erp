@@ -237,10 +237,13 @@ def assign_round_robin(lead_ids: list[int], salespeople: list[str]) -> dict[int,
 
 
 def leads_per_month(leads: list[Lead]) -> list[tuple[str, int]]:
-    return {
-        [(key, len(list(group))) 
-        for key, group in itertools.groupby(leads, key=lambda lead: lead.created.strftime("%Y-%m"))]
-    }
+    sorted_leads = sorted(leads, key=lambda lead: lead.created)
+
+    return [
+        (key, len(list(group))) 
+        for key, group in itertools.groupby(
+            sorted_leads, key=lambda lead: lead.created.strftime("%Y-%m"))
+    ]
 
 # ════════════════════════════════════════════════════════════════════════════
 # CRM-07 · Top opportunities & temperature              Concept: heapq & bisect
