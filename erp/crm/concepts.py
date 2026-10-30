@@ -227,8 +227,14 @@ def companies_with_multiple_leads(leads: list[Lead]) -> dict[str, list[int]]:
 #
 # 📚 Discover: https://docs.python.org/3/library/itertools.html  (cycle, groupby)
 # ⏱ ~25 min
+import itertools
+
+
 def assign_round_robin(lead_ids: list[int], salespeople: list[str]) -> dict[int, str]:
-    todo("CRM-06")
+    if not salespeople:
+        raise ValueError
+    
+    return dict(zip(lead_ids, itertools.cycle(salespeople)))
 
 
 def leads_per_month(leads: list[Lead]) -> list[tuple[str, int]]:
