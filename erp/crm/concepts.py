@@ -57,11 +57,24 @@ class LeadStage(StrEnum):
 
     @property
     def default_probability(self) -> int:
-        todo("CRM-01")
+        match self:
+            case LeadStage.NEW:
+                return 10
+            case LeadStage.QUALIFIED:
+                return 30
+            case LeadStage.PROPOSITION:
+                return 60
+            case LeadStage.WON:
+                return 100
+            case LeadStage.LOST:
+                return 0
 
     @property
     def is_open(self) -> bool:
-        todo("CRM-01")
+        if self.default_probability == 100 or self.default_probability == 0:
+            return False
+        else:
+            return True
 
 
 # ════════════════════════════════════════════════════════════════════════════
