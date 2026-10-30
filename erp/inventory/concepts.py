@@ -52,7 +52,9 @@ from enum import StrEnum
 class MoveType(StrEnum):
     """Type of a stock move."""
 
-    # TODO INV-01: declare the members here
+    RECEIPT = "receipt"
+    DELIVERY = "delivery"
+    ADJUSTMENT = "adjustment"
 
     @property
     def sign(self) -> int:
