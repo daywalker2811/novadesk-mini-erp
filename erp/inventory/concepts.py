@@ -88,7 +88,7 @@ def signed_quantity(move: StockMove) -> int:
 #             https://peps.python.org/pep-3132/  (extended iterable unpacking)
 # ⏱ ~20 min
 def index_by_sku(products: list[Product]) -> dict[str, Product]:
-    todo("INV-02")
+    return {i.sku:i for i in products}
 
 
 def categories(products: list[Product]) -> set[str]:
