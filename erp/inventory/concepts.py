@@ -68,7 +68,7 @@ class MoveType(StrEnum):
 
 
 def signed_quantity(move: StockMove) -> int:
-    todo("INV-01")
+    return MoveType(move.move_type).sign * move.quantity
 
 
 # ════════════════════════════════════════════════════════════════════════════
