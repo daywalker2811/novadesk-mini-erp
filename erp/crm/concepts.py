@@ -168,7 +168,11 @@ def weighted_pipeline(leads: list[Lead]) -> list[tuple[str, float]]:
 #             https://docs.python.org/3/whatsnew/3.3.html#pep-380  (yield from)
 # ⏱ ~20 min
 def valid_leads(leads: Iterable[Lead]):
-    todo("CRM-04")
+    for lead in leads:
+        if lead.email and lead.email.count("@") == 1:
+            local_part, domain = lead.email.split("@")
+            if local_part and "." in domain:
+                yield lead 
 
 
 def all_leads(*sources: Iterable[Lead]):
