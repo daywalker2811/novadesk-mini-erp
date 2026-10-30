@@ -90,15 +90,15 @@ class Stage(StrEnum):
 #             https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences  (unpacking)
 # ⏱ ~20 min
 def parse_timesheet_line(line: str) -> TimesheetLine:
-    todo("PRJ-02")
+    day, employee, task_id, hours = line.strip().split(",")
+    return TimesheetLine(day=date.fromisoformat(day), employee=employee, task_id=task_id, hours=float(hours))
 
 
 def open_tasks_by_id(tasks: list[Task]) -> dict[str, Task]:
-    todo("PRJ-02")
-
+    return {task.id: task for task in tasks if task.stage not in CLOSED_STAGES}
 
 def all_tags(tasks: list[Task]) -> set[str]:
-    todo("PRJ-02")
+    return {tag for task in tasks for tag in task.tags}
 
 
 # ════════════════════════════════════════════════════════════════════════════
